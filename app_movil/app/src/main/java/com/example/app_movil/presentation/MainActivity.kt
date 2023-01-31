@@ -23,7 +23,6 @@ import com.example.app_movil.presentation.theme.App_movilTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.*
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,20 +36,19 @@ class MainActivity : ComponentActivity() {
             Log.i("Permisos", "No se concedieron permisos")
         }
 
+        val fusedLocationProviderClient: FusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(this)
+        val locationManager = LocationManager(this, fusedLocationProviderClient)
+
         setContent {
-            Setup()
+            Setup(locationManager)
         }
     }
 
     @Composable
     @OptIn(ExperimentalPermissionsApi::class)
-    private fun Setup() {
+    private fun Setup(locationManager: LocationManager) {
         App_movilTheme {
-            val scope = rememberCoroutineScope()
-            val fusedLocationProviderClient: FusedLocationProviderClient =
-                LocationServices.getFusedLocationProviderClient(this)
-
-            val locationManager = LocationManager(this, fusedLocationProviderClient)
             locationManager.createLocationRequest()
             locationManager.createLocationRequest(-99.363333, 20.085833)
             locationManager.createLocationRequest(-98.363333, 19.085833)
@@ -64,6 +62,7 @@ class MainActivity : ComponentActivity() {
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     )
                 )
+
             val contentModifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 7.dp)
@@ -117,11 +116,9 @@ class MainActivity : ComponentActivity() {
                                     .fillMaxWidth()
                                     .padding(7.dp),
                                 onClick = {
-                                    scope.launch {
-                                        val lat = 15.085833
-                                        val long = -94.363333
-                                        locationManager.createLocationRequest(long, lat)
-                                    }
+                                    val lat = 15.085833
+                                    val long = -94.363333
+                                    locationManager.createLocationRequest(long, lat)
                                 }
                             ) {
                                 Text("NEW LOCATION")
