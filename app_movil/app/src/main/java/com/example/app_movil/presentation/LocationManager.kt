@@ -60,7 +60,8 @@ class LocationManager(
                                 val weatherDTO = WeatherApi.apiInstance.getWeatherDetails(
                                     lat,
                                     long,
-                                    "0a3ef84c03da5be5c9dc302b7f347ce9"
+                                    "0a3ef84c03da5be5c9dc302b7f347ce9",
+                                    "es"
                                 )
                                 locations.add(
                                     CardData(

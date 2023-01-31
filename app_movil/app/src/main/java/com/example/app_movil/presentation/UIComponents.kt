@@ -58,9 +58,9 @@ fun CardComponent(
     AppCard(
         onClick = { /*TODO*/ },
         appName = { Text("Clima", color = Color.White) },
-        time = { Text(time, color = if (temp < 12) Color.White else Color.Red) },
+        time = { Text(time, color = if (temp < 27) Color.White else Color.Red) },
         title = { Text(title, color = Color.Yellow) }) {
-        val icon = if (temp > 12) R.mipmap.high else R.mipmap.low
+        val icon = if (temp >= 27) R.mipmap.high else R.mipmap.low
         Row(horizontalArrangement = Arrangement.Center) {
             Image(
                 modifier = Modifier.height(25.dp),

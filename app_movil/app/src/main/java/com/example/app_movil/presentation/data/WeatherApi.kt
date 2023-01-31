@@ -17,5 +17,5 @@ interface WeatherApi{
     }
     @GET("/data/2.5/weather")
     suspend fun getWeatherDetails(@Query("lat")lat:Double,@Query("lon")lon:Double,
-                                  @Query("appid") appid:String,): WeatherDTO
+                                  @Query("appid") appid:String,@Query("lang") lang:String): WeatherDTO
 }
